@@ -15,9 +15,25 @@
   float:right;
 }
 .grid {
+  border-collapse: collapse
 
+}
+.grid:hover {
+  cursor: crosshair;
 }
 .cell {
   width: 10px;
   height: 10px;
+}
+.cell:hover {
+  border-color: red;
+}
+.inactive {
+  background-color: gray;
+
+}
+.inactive:hover {
+  cursor: default;
+  border-color: black;
+
 }
