@@ -10,7 +10,7 @@
 8. Nodes connected in a straight line are worth even more points.
 8. Shooting a node edge deducts one point from the field's total.
 9. Shooting a node's center destroys the entire node, deducting the appropriate number of points.
-7. The game will be split into sections
+10. The game will be split into sections
   1. Setup
     * Players take turns laying down their nodes.
     * Max score possible is listed for the node configuration.
@@ -23,5 +23,14 @@
     * Points are tallied.
     * Players allowed to start again(points back to 0) or continue from the current score.
 
-
 Points are determined by how many nodes/undamaged nodes remain after victory. Connected nodes(into 'ships') are worth more. Regular*nodes_connected
+### Components
+* App
+  * Board
+    * Owns States:
+      1. Matrix: Play field as 2D array
+    * Children:
+      1. Player(x2)
+      2. Grid(x2)
+        * Children:
+          1. Cell(x(X*Y))
