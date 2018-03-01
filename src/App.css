@@ -1,0 +1,23 @@
+* {
+  border: 1px solid black;
+  padding: 1px;
+}
+.App {
+  overflow:auto;
+}
+.board {
+
+}
+.board:nth-of-type(1) {
+  float:left;
+}
+.board:nth-of-type(2) {
+  float:right;
+}
+.grid {
+
+}
+.cell {
+  width: 10px;
+  height: 10px;
+}
