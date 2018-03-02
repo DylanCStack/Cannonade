@@ -20,52 +20,51 @@ export class Board extends React.Component {
     super(props);
     this.state = {
       matrix: createGrid(boardHeight, boardWidth),
-      action: {},
     }
-    this.action = {};
+    this.handler;
     this.clickHandler = this.clickHandler.bind(this);
-    this.setAction = this.setAction.bind(this);
+    this.setHandler = this.setHandler.bind(this);
   }
 
-  setAction(action) {
-    this.action = action;
-    this.state.action = this.action;
+  placeNodes(y, x) {
+    let newMatrix = this.state.matrix;
+
+    if((x > 0 && x < boardWidth-1) && (y > 0 && y < boardHeight-1)){
+      // Make sure clicked cell is not at the edge of the grid
+      let newCells = [];
+      for(let i = 1; i <= 9; i++){
+        // Ugly loop because I thought 9 'Object.assign's was uglier
+        // loop will target clicked cell and all adjcent cells
+        let yCoord = y - i % 3 + 1;
+        let xCoord = x  - Math.floor((9-i)/3) + 1;
+        if(newMatrix[yCoord][xCoord].empty){
+          newCells.push([yCoord, xCoord]);
+          console.log('push')
+        } else {// if one of the cells to be filled is not empty, do not fill any of these cells
+          console.log('too close to another node')
+          newCells = [];
+          break;
+        }
+      }
+      for (let cell of newCells) {
+        Object.assign(newMatrix[cell[0]][cell[1]], {
+          node: (cell[0]===y) && (cell[1]===x) ? true : false,// only set the exact cell clicked to be a node, else just fill
+          empty: false,
+        });
+        console.log(`assign to   ${cell[0]},${cell[1]}`)
+      }
+    } else {
+      console.log('Cannot place node at the edge of the grid');
+    }
+    this.setState({matrix: newMatrix});
+  }
+
+  setHandler(action) {
+    this.handler = action.bind(this);
   }
 
   clickHandler(y,x) {
-    console.log('click');
-    let newMatrix = this.state.matrix;
-    if(this.action === 'node'){
-      if((x > 0 && x < boardWidth-1) && (y > 0 && y < boardHeight-1)){
-        // Make sure clicked cell is not at the edge of the grid
-        let newCells = [];
-        for(let i = 1; i <= 9; i++){
-          // Ugly loop because I thought 9 'Object.assign's was uglier
-          // loop will target clicked cell and all adjcent cells
-          let yCoord = y - i % 3 + 1;
-          let xCoord = x  - Math.floor((9-i)/3) + 1;
-          if(newMatrix[yCoord][xCoord].empty){
-            newCells.push([yCoord, xCoord]);
-            console.log('push')
-          } else {// if one of the cells to be filled is not empty, do not fill any of these cells
-            console.log('too close to another node')
-            newCells = [];
-            break;
-          }
-        }
-        for (let cell of newCells) {
-          Object.assign(newMatrix[cell[0]][cell[1]], {
-            node: (cell[0]===y) && (cell[1]===x) ? true : false,// only set the exact cell clicked to be a node, else just fill
-            empty: false,
-          });
-          console.log(`assign to   ${cell[0]},${cell[1]}`)
-        }
-      } else {
-        console.log('Cannot place node at the edge of the grid');
-      }
-    }
-
-    this.setState({matrix: newMatrix});
+    this.handler(y, x);
   }
 
   render() {
@@ -74,7 +73,7 @@ export class Board extends React.Component {
 
     return(
       <div className='board'>
-        <button className={this.action === 'node' ? 'btn-active' : ''} onClick={()=>{this.setAction('node')}}>Place Nodes</button>
+        <button className={this.action === 'node' ? 'btn-active' : ''} onClick={()=>{this.setHandler(this.placeNodes)}}>Place Nodes</button>
         <Grid matrix={matrix} action={this.clickHandler}/>
       </div>
     );
