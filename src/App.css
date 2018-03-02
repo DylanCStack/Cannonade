@@ -29,11 +29,16 @@
   border-color: red;
 }
 .inactive {
-  background-color: gray;
+  border-color: gray;
 
 }
 .inactive:hover {
   cursor: default;
   border-color: black;
-
+}
+.cell.filled {
+  background-color: gray;
+}
+td.cell.node {
+  background-color: red;
 }
