@@ -14,12 +14,11 @@ export class Grid extends React.Component {
       return (<tr key={y}>
       {
         row.map((col) => {
-          return (<Cell x={col.x} y={col.y} key={col.x}></Cell>)
+          return (<Cell {...col} key={col.x} takeAction={this.props.action}></Cell>)
         })
       }
       </tr>)
     });
-    console.log(grid);
 
     return (
       <table className='grid'>

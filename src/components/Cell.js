@@ -4,19 +4,19 @@ export class Cell extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    this.state = {
-      hit: false,
-    }
+    this.takeAction = this.props.takeAction;
   }
+
   handleClick(e) {
-    if(!this.state.hit){
-      this.setState({hit: true})
-      console.log(`Hit: ${this.props.x}, ${this.props.y}`);
-    }
+    this.takeAction(this.props.y, this.props.x);
   }
 
   render() {
-    let style = ['cell', this.state.hit && 'inactive'].join(' ');
-    return <td className={style} onClick={this.handleClick}></td>
+    let inactive = this.props.hit ? 'inactive' : '';
+    let empty = this.props.empty ? '' : 'filled';
+    let node = this.props.node ? 'node' : '';
+    let style = `cell ${inactive} ${empty} ${node}`;
+
+    return <td className={style} onClick={this.handleClick}></td>;
   }
 }
