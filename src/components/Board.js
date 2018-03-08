@@ -15,13 +15,14 @@ function createGrid(numRows, numCols) {
 
 const boardHeight = 20;
 const boardWidth = 20;
+const maxNodes = 5;
 export class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       matrix: createGrid(boardHeight, boardWidth),
     }
-    this.handler;
+    this.handler = () => {};
     this.clickHandler = this.clickHandler.bind(this);
     this.setHandler = this.setHandler.bind(this);
   }
