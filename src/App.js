@@ -18,10 +18,10 @@ class App extends Component {
         },
       ],
     };
-    this.updatePoints = this.updatePoints.bind(this);
+    this.updatePlayer = this.updatePlayer.bind(this);
   }
 
-  updatePoints(player) {
+  updatePlayer(player) {
     let players = this.state.players;
     players[player.id] = player;
 
@@ -33,13 +33,12 @@ class App extends Component {
        player.id = i;
        return player;
     });
-    const updatePoints = this.updatePoints;
 
     return (
       <div className="App">
         {
           players.map( player => {
-             return <Board player={player} key={player.id} updatePoints={updatePoints} ></Board>;
+             return <Board player={player} key={player.id} updatePlayer={this.updatePlayer} ></Board>;
           })
         }
       </div>

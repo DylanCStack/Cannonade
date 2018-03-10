@@ -4,11 +4,10 @@ export class Cell extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    this.takeAction = this.props.takeAction;
   }
 
   handleClick(e) {
-    this.takeAction(this.props.y, this.props.x);
+    this.props.takeAction(this.props.y, this.props.x);
   }
 
   render() {

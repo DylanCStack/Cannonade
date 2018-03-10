@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid} from './Grid.js';
+import { Grid } from './Grid.js';
 
 function createGrid(numRows, numCols) {
   let rows = [];
@@ -54,12 +54,14 @@ export class Board extends React.Component {
           empty: false,
         });
         console.log(`assign to   ${cell[0]},${cell[1]}`)
-        let pointDifference = 9;// will later be a function to account for adjacent nodes
-        this.props.updatePoints(pointDifference);
       }
+      let updatedPlayer = this.props.player;
+      updatedPlayer.points += newCells.length;// will later be a function to account for adjacent nodes
+      this.props.updatePlayer(updatedPlayer);
     } else {
       console.log('Cannot place node at the edge of the grid');
     }
+
     this.setState({matrix: newMatrix});
   }
 
@@ -72,11 +74,16 @@ export class Board extends React.Component {
   }
 
   render() {
-    let matrix = this.state.matrix;
+    const matrix = this.state.matrix;
+    const player = this.props.player;
 
     return(
       <div className='board'>
-        <button className={this.action === 'node' ? 'btn-active' : ''} onClick={()=>{this.setHandler(this.placeNodes)}}>Place Nodes</button>
+      <div className='player'>
+        <h3 className='player-name'>{player.name}</h3>
+        <h3 className='player-points'>{player.points}</h3>
+      </div>
+        <button onClick={()=>{this.setHandler(this.placeNodes)}}>Place Nodes</button>
         <Grid matrix={matrix} action={this.clickHandler}/>
       </div>
     );
