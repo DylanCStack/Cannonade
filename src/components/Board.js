@@ -21,6 +21,7 @@ export class Board extends React.Component {
     super(props);
     this.state = {
       matrix: createGrid(boardHeight, boardWidth),
+      nodeCount: 0,
     }
     this.handler = () => {};
     this.clickHandler = this.clickHandler.bind(this);
@@ -49,10 +50,12 @@ export class Board extends React.Component {
       }
       for (let cell of newCells) {
         Object.assign(newMatrix[cell[0]][cell[1]], {
-          node: (cell[0]===y) && (cell[1]===x) ? true : false,// only set the exact cell clicked to be a node, else just fill
+          node: (cell[0]===y) && (cell[1]===x),// only set the exact cell clicked to be a node, else just fill
           empty: false,
         });
         console.log(`assign to   ${cell[0]},${cell[1]}`)
+        let pointDifference = 9;// will later be a function to account for adjacent nodes
+        this.props.updatePoints(pointDifference);
       }
     } else {
       console.log('Cannot place node at the edge of the grid');
@@ -70,7 +73,6 @@ export class Board extends React.Component {
 
   render() {
     let matrix = this.state.matrix;
-    let action = this.state.action;
 
     return(
       <div className='board'>
